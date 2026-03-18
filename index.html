@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.V.E.T Smart Canteen</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fa-solid fa-utensils"></i>
+            S.I.V.E.T Canteen
+        </div>
+        <div class="navbar-actions">
+            <i class="fa-solid fa-lock" id="admin-toggle" title="Staff Access" style="cursor: pointer; opacity: 0.1; transition: opacity 0.3s;" onclick="toggleAdminPortal()"></i>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-grid">
+            
+            <!-- Student Box -->
+            <div class="glass-panel fade-in" style="animation-delay: 0.1s;">
+                <div class="auth-header">
+                    <h2><i class="fa-solid fa-user-graduate"></i> Student Portal</h2>
+                    <p>Order food ahead of time</p>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchStudentTab('login')" id="tab-student-login">Login</button>
+                    <button class="tab-btn" onclick="switchStudentTab('register')" id="tab-student-register">Register</button>
+                </div>
+
+                <!-- Student Login Form -->
+                <form id="student-login-form">
+                    <div class="form-group">
+                        <label>Roll Number / ID</label>
+                        <input type="text" id="login-roll" class="form-control" required placeholder="e.g. 21BCA101">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div style="position: relative;">
+                            <input type="password" id="login-pass" class="form-control" required placeholder="••••••••" style="padding-right: 2.5rem;">
+                            <i class="fa-solid fa-eye" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);" onclick="togglePassword('login-pass', this)"></i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </button>
+                </form>
+
+                <!-- Student Register Form -->
+                <form id="student-register-form" class="hidden">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="reg-name" class="form-control" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Roll Number / ID</label>
+                        <input type="text" id="reg-roll" class="form-control" required placeholder="e.g. 21BCA101">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div style="position: relative;">
+                            <input type="password" id="reg-pass" class="form-control" required placeholder="Create a password" style="padding-right: 2.5rem;">
+                            <i class="fa-solid fa-eye" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);" onclick="togglePassword('reg-pass', this)"></i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fa-solid fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Box -->
+            <div id="admin-portal-panel" class="glass-panel fade-in hidden" style="animation-delay: 0.3s; flex-direction: column; justify-content: center;">
+                <div class="auth-header">
+                    <h2><i class="fa-solid fa-store"></i> Staff Portal</h2>
+                    <p>Manage orders & menu</p>
+                </div>
+
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label>Staff ID</label>
+                        <input type="text" id="admin-id" class="form-control" required placeholder="ADMIN">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div style="position: relative;">
+                            <input type="password" id="admin-pass" class="form-control" required placeholder="admin" style="padding-right: 2.5rem;">
+                            <i class="fa-solid fa-eye" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);" onclick="togglePassword('admin-pass', this)"></i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-shield-halved"></i> Staff Login
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Container for toast notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function toggleAdminPortal() {
+            const panel = document.getElementById('admin-portal-panel');
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                showToast('Staff Portal revealed');
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+    </script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
